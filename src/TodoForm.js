@@ -10,10 +10,9 @@ const TodoForm = (props) => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    let todo = { name: data.name, complete: false, id: Math.random() };
-    console.log(todo);
-    console.log(props);
+    let todo = { name: data.name, complete: false, id: props.nextId };
     props.dispatch({ type: "ADD_TODO", todo: todo });
+    props.dispatch({ type: "INC_ID" });
     // console.log(data);
     // console.log(watch("firstName"));
   };
@@ -32,5 +31,8 @@ const TodoForm = (props) => {
     </form>
   );
 };
+const mapStateToProps = (state) => {
+  return { NextId: state.NextId, todos: state.todos };
+};
 
-export default connect()(TodoForm);
+export default connect(mapStateToProps)(TodoForm);
